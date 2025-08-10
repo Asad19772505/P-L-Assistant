@@ -1,14 +1,16 @@
 import streamlit as st
 import pandas as pd
+import sys
 from pathlib import Path
 
-# --- BEGIN: path safety patch (added by fix_imports.py) ---
-import sys as _sys, os as _os
-# Ensure the project root is on sys.path for 'from src...' imports
-_pr = _os.path.dirname(__file__)
-if _pr not in _sys.path:
-    _sys.path.append(_pr)
-# --- END: path safety patch (added by fix_imports.py) ---
+# --- BEGIN: path safety patch (updated) ---
+# Resolve the project root directory and add it to the system path.
+# This ensures that 'from src...' imports work correctly, regardless of
+# how the script is executed (e.g., from the terminal, in an IDE, or by Streamlit).
+project_root = Path(__file__).resolve().parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+# --- END: path safety patch ---
 
 from src.export import export_excel
 
